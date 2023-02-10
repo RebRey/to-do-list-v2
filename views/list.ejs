@@ -1,0 +1,34 @@
+<!-- ejs header layout -->
+<%- include("header"); -%>
+
+<!-- use an ejs tag to update the date -->
+<div class="box" id="heading">
+  <h1><%= listTitle %></h1>
+</div>
+
+<div class="box">
+  <!-- use a FOR loop using ejs snippets that loops through the entre length of the newListItems array and renders a new LI for each item inside the array -->
+  <% for (let i=0; i < newListItems.length; i++) { %>
+  <div class="item">
+    <input type="checkbox" />
+    <!-- use an ejs tag newListItems -->
+    <p><%= newListItems[i] %></p>
+  </div>
+  <% } %>
+
+  <!-- when a user adds a new item through the text input then that item gets saved under the variable named newItem -->
+  <form class="item" action="/" method="post">
+    <input
+      type="text"
+      name="newItem"
+      placeholder="New Item"
+      autocomplete="off"
+      autofocus
+    />
+    <!-- when the user clicks the submit button, this will trigger a post request to the home route -->
+    <button type="submit" name="list" value=<%= listTitle %>>+</button>
+  </form>
+</div>
+
+<!-- ejs footer layout -->
+<%- include("footer"); -%>
