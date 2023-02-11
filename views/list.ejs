@@ -13,10 +13,18 @@
   <form action="/delete" method="post">
     <div class="item">
       <!-- submit form when the checkbox is checked -->
-      <input type="checkbox" name="checkbox" onChange ="this.form.submit()"/>
+      <input
+        type="checkbox"
+        name="checkbox"
+        value="<%=item._id%>"
+        onChange="this.form.submit()"
+      />
       <!-- Access the .name property to render the field value for name in the DB -->
       <p><%= item.name %></p>
     </div>
+    <!-- add a hidden input type add a name so you can refer to it when you look at your req.body-->
+    <!-- add a value with ejs tags -->
+    <input type="hidden" name="listName" value="<%= listTitle %>" />
   </form>
   <% }); %>
 
@@ -29,8 +37,8 @@
       autocomplete="off"
       autofocus
     />
-    <!-- when the user clicks the submit button, this will trigger a post request to the home route -->
-    <button type="submit" name="list">+</button>
+    <!-- add a value using ejs tag. When the form is submitted we will get access to itemName and listName in the home route post request  -->
+    <button type="submit" name="list" value="<%= listTitle %>">+</button>
   </form>
 </div>
 
