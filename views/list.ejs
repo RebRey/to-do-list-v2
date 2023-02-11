@@ -7,14 +7,18 @@
 </div>
 
 <div class="box">
-  <!-- use a FOR loop using ejs snippets that loops through the entre length of the newListItems array and renders a new LI for each item inside the array -->
-  <% for (let i=0; i < newListItems.length; i++) { %>
-  <div class="item">
-    <input type="checkbox" />
-    <!-- use an ejs tag newListItems -->
-    <p><%= newListItems[i] %></p>
-  </div>
-  <% } %>
+  <!-- Loop through the entre length of the newListItems array and render a newListItems for each item inside the array -->
+  <% newListItems.forEach(function(item) { %>
+  <!-- form for deleting items -->
+  <form action="/delete" method="post">
+    <div class="item">
+      <!-- submit form when the checkbox is checked -->
+      <input type="checkbox" name="checkbox" onChange ="this.form.submit()"/>
+      <!-- Access the .name property to render the field value for name in the DB -->
+      <p><%= item.name %></p>
+    </div>
+  </form>
+  <% }); %>
 
   <!-- when a user adds a new item through the text input then that item gets saved under the variable named newItem -->
   <form class="item" action="/" method="post">
@@ -26,7 +30,7 @@
       autofocus
     />
     <!-- when the user clicks the submit button, this will trigger a post request to the home route -->
-    <button type="submit" name="list" value=<%= listTitle %>>+</button>
+    <button type="submit" name="list">+</button>
   </form>
 </div>
 

@@ -41,6 +41,16 @@ On the Command Line Interface (CLI) cd into your project and do the following:
   $ npm install ejs
 ```
 
+6) Install Mongoose using npm. See documentation here: [Click Me](https://www.npmjs.com/package/mongoose) 
+```
+npm install mongoose
+```
+
+When you install Mongoose this will do the following:
+* Downloads the Mongoose package and the dependencies it requires
+* Saves the package in the node_modules directory
+* Records the dependency information in the package.json file 
+
 ## Methods Used:
 * **getDay()** JavaScript method that returns the day of the week for the specified date according to local time, where 0 represents Sunday.
 

@@ -1,4 +1,4 @@
-// Require the express module. (also install using CLI)
+// Require the express module (also install using CLI)
 const express = require("express");
 
 // Require the body-parser module  (also install using CLI)
@@ -7,20 +7,14 @@ const bodyParser = require("body-parser");
 // Require the https module.
 const https = require("https");
 
+// Require Mongoose module (also install using CLI)
+const mongoose = require("mongoose");
+
 // Create a constant called app and set it equal to the express() method
 const app = express();
 
 // Run the server on port 3000
 const port = 3000;
-
-// Require the date module we created (this is a local module so use __dirname)
-const date = require(__dirname + "/date.js");
-
-// Create a variable called news and set it equal to an empty array
-const items = [];
-
-// Create a variable called workItems and set it qual to an empty array
-const workItems = [];
 
 // Use the app.set() method to set the app's view engine to ejs.
 app.set("view engine", "ejs");
@@ -31,28 +25,86 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Use the app.use() method and express.static() methods to serve static files (CSS style sheet) in Express.
 app.use(express.static("public"));
 
+// Open the connection to MongoDB server and create the database
+main().catch((err) => console.log(err));
+async function main() {
+  mongoose.set("strictQuery", false);
+
+  await mongoose.connect("mongodb://127.0.0.1/todolistDB");
+
+  console.log("Connected to MongoDB server.");
+}
+
+// Create a mongoose SCHEMA
+const itemSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, "Please check your data entry, no name specified."],
+  },
+});
+
+// Create a Mongoose MODEL (Mongoose variables are capitalized). This will create an items collection.
+const Item = mongoose.model("Item", itemSchema);
+
+// Create a Mongoose DOCUMENTS
+const item1 = new Item({
+  name: "Welcome to your to-do-list!",
+});
+
+const item2 = new Item({
+  name: "Click on the + button to add a new item.",
+});
+
+const item3 = new Item({
+  name: "<-- Click on this to delete an item.",
+});
+
+// Store documents in an array
+const defaultItems = [item1, item2, item3];
+
 // Create a GET request on the homepage route
 app.get("/", function (req, res) {
-  // create a variable called day and set it equal to a function call for date() that is bound to the const date
-  // to activate getDate() function
-  const day = date.getDate();
-
-  //render our list.ejs passing in two variables: one called kindOfDay set to equal day and another
-  // called newListItems set to equal to the items array.
-  res.render("list", { listTitle: day, newListItems: items });
+  // Save user input to Items Collection, passing results to callback (stored in foundItems)
+  Item.find({}, function (err, foundItems) {
+    // If the array is empty in Items Collection
+    if (foundItems.length === 0) {
+      // Then insert the array of default items and provide a call back to handle errors
+      Item.insertMany(defaultItems, function (err) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("Successfully saved defaultItems to the DB.");
+        }
+      });
+      // Finally, redirect to root route
+      res.redirect("/");
+    } else {
+      // Render foundItems on home.ejs
+      res.render("list", { listTitle: "Today", newListItems: foundItems });
+    }
+  });
 });
 
 // Handle the post request to the homepage route
 app.post("/", function (req, res) {
-  const item = req.body.newItem;
+  // save the text that the user types
+  const itemName = req.body.newItem;
 
-  if (req.body.list === "Work") {
-    workItems.push(item);
-    res.redirect("/work");
-  } else {
-    items.push(item);
-    res.redirect("/");
-  }
+  // Create a new Mongoose DOCUMENT that contains the user's input (stored in itemName)
+  const item = new Item({
+    name: itemName,
+  });
+
+  // Save the document in the Items Collection
+  item.save();
+
+  // redirect to home route to render itemName on the app.
+  res.redirect("/");
+});
+
+// Handle the post request for deleted items
+app.post("/delete", function (req, res) {
+  console.log(req.body);
 });
 
 // Create a GET request for the work page
