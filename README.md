@@ -51,6 +51,15 @@ npm install mongoose
   $ npm install lodash
 ```
 
+8) Use npm to install dotenv in the current project folder. You can check that it is installed in the package.json file under dependencies. 
+```
+  $ npm install dotenv
+```
+* to view dotenv's readme use npm:
+```
+  $ npm docs dotenv
+```
+
 When you install Mongoose this will do the following:
 * Downloads the Mongoose package and the dependencies it requires
 * Saves the package in the node_modules directory
