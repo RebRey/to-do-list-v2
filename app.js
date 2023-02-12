@@ -39,7 +39,7 @@ async function main() {
   // await mongoose.connect("mongodb://127.0.0.1/todolistDB");
 
   // Create a connection string for Mongo Atlas
-  const connectionURI = ""
+  const connectionURI = "mongodb+srv://admin-rebecca:" + 
   // Mongo Atlas connection
   await mongoose.connect(
     "mongodb+srv://admin-rebecca:<password>@cluster0.swlgzsc.mongodb.net/?retryWrites=true&w=majority/todolistDB"
