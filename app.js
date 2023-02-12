@@ -32,8 +32,13 @@ app.use(express.static("public"));
 main().catch((err) => console.log(err));
 async function main() {
   mongoose.set("strictQuery", false);
+  // local connection
+  // await mongoose.connect("mongodb://127.0.0.1/todolistDB");
 
-  await mongoose.connect("mongodb://127.0.0.1/todolistDB");
+  // Mongo Atlas connection
+  await mongoose.connect(
+    "mongodb+srv://admin-rebecca:<password>@cluster0.swlgzsc.mongodb.net/?retryWrites=true&w=majority/todolistDB"
+  );
 
   console.log("Connected to MongoDB server.");
 }
