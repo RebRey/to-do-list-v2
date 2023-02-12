@@ -59,6 +59,7 @@ npm install mongoose
 ```
   $ npm docs dotenv
 ```
+MAKE SURE YOU ADD .env to .gitignore BEFORE COMMITTING this will prevent your .env with your secrets from getting added to the repository. 
 
 When you install Mongoose this will do the following:
 * Downloads the Mongoose package and the dependencies it requires
