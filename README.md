@@ -46,6 +46,11 @@ On the Command Line Interface (CLI) cd into your project and do the following:
 npm install mongoose
 ```
 
+7) Use npm to install lodash in the current project folder. You can check that it is installed in the package.json file under dependencies. 
+```
+  $ npm install lodash
+```
+
 When you install Mongoose this will do the following:
 * Downloads the Mongoose package and the dependencies it requires
 * Saves the package in the node_modules directory

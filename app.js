@@ -10,6 +10,9 @@ const https = require("https");
 // Require Mongoose module (also install using CLI)
 const mongoose = require("mongoose");
 
+// Require lodash module (also install using CLI)
+const _ = require("lodash");
+
 // Create a constant called app and set it equal to the express() method
 const app = express();
 
@@ -168,7 +171,7 @@ app.post("/delete", function (req, res) {
 
 // Create a GET request for a dynamic route by using express
 app.get("/:customListName", function (req, res) {
-  const customListName = req.params.customListName;
+  const customListName = _.capitalize(req.params.customListName);
 
   // Check if there's a list that has the same name as the one that the user is currently tying to access
   List.findOne({ name: customListName }, function (err, foundList) {
