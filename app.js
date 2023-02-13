@@ -1,5 +1,5 @@
 // require dotenv module *MUST BE ON TOP*
-require('dotenv').config();
+require("dotenv").config();
 
 // Require the express module (also install using CLI)
 const express = require("express");
@@ -39,11 +39,12 @@ async function main() {
   // await mongoose.connect("mongodb://127.0.0.1/todolistDB");
 
   // Create a connection string for Mongo Atlas
-  const connectionURI = "mongodb+srv://admin-rebecca:" + process.env.MONGO_ATLAS_ADMIN_PASSWORD + "@cluster0.swlgzsc.mongodb.net/todolistDB"
+  const connectionURI =
+    "mongodb+srv://admin-rebecca:" +
+    process.env.MONGO_ATLAS_ADMIN_PASSWORD +
+    "@cluster0.swlgzsc.mongodb.net/todolistDB";
   // Mongo Atlas connection
-  await mongoose.connect(
-    connectionURI
-  );
+  await mongoose.connect(connectionURI);
 
   console.log("Connected to MongoDB server.");
 }
@@ -52,7 +53,6 @@ async function main() {
 const itemSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, "Please check your data entry, no name specified."],
   },
 });
 

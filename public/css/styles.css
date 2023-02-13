@@ -64,8 +64,11 @@ button {
   background-color: #A683E3;
   color: #fff;
   font-size: 30px;
-  padding-bottom: 6px;
   border-width: 0;
+}
+
+button:hover {
+  background-color: #662fc7;
 }
 
 input[type="text"] {
